@@ -13,20 +13,9 @@ import GithubState from './components/context/github/GithubState'
 
 function App() {
 
-  const [users, setUsers] = useState([])
-  const [user, setUser] = useState({})
   const [repos, setRepos] = useState([])
   const [loading, setLoading] = useState(false)
   const [alert, setAlert] = useState(null)
-
-  // Get single Github user
-  const getUser = async (username) => {
-    setLoading(true)
-    const res = await axios.get(`https://api.github.com/users/${username}?client_id=${import.meta.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${import.meta.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
-    setUser(res.data);
-    setLoading(false)
-
-  }
 
   // Get user repos
   const getUserRepos = async (username) => {
@@ -37,11 +26,6 @@ function App() {
 
   }
 
-  // Clear users from state
-  const clearUsers = () => {
-    setUsers([])
-    setLoading(false)
-  }
   // Show Alert
   const showAlert = (msg, type) => {
     setAlert({ msg, type })
@@ -61,15 +45,13 @@ function App() {
               <Route path="/" element={
                 <>
                   <Search
-                    clearUsers={clearUsers}
-                    showClear={users.length > 0 ? true : false}
                     showAlert={showAlert}
                   />
-                  <Users users={users} loading={loading} />
+                  <Users />
                 </>
               } />
               <Route path="/about" element={<About />} />
-              <Route path="/user/:id" element={<User user={user} getUser={getUser} loading={loading} repos={repos} getUserRepos={getUserRepos} />} />
+              <Route path="/user/:id" element={<User loading={loading} repos={repos} getUserRepos={getUserRepos} />} />
 
             </Routes>
 
