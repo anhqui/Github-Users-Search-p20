@@ -1,8 +1,7 @@
 import './App.css'
 import Navbar from './components/layout/Navbar'
 import Users from './users/Users'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useState } from 'react'
 import Search from './users/Search'
 import Alert from './components/layout/Alert'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
@@ -13,18 +12,7 @@ import GithubState from './components/context/github/GithubState'
 
 function App() {
 
-  const [repos, setRepos] = useState([])
-  const [loading, setLoading] = useState(false)
   const [alert, setAlert] = useState(null)
-
-  // Get user repos
-  const getUserRepos = async (username) => {
-    setLoading(true);
-    const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${import.meta.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${import.meta.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
-    setRepos(res.data);
-    setLoading(false);
-
-  }
 
   // Show Alert
   const showAlert = (msg, type) => {
@@ -51,7 +39,7 @@ function App() {
                 </>
               } />
               <Route path="/about" element={<About />} />
-              <Route path="/user/:id" element={<User loading={loading} repos={repos} getUserRepos={getUserRepos} />} />
+              <Route path="/user/:id" element={<User />} />
 
             </Routes>
 

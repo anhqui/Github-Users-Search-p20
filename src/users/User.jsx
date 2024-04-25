@@ -1,13 +1,12 @@
 import { useContext, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom'
 import Spinner from '../components/layout/Spinner';
-import PropTypes from "prop-types";
 import Repos from '../components/repos/Repos';
 import GithubContext from '../components/context/github/GithubContext';
 
 
-const User = ({ repos, getUserRepos }) => {
-    const { user, getUser, loading } = useContext(GithubContext)
+const User = () => {
+    const { user, getUser, loading, repos, getUserRepos } = useContext(GithubContext)
     const { id } = useParams()
     const {
         name,
@@ -72,9 +71,5 @@ const User = ({ repos, getUserRepos }) => {
 
 };
 
-User.propTypes = {
-    repos: PropTypes.array.isRequired,
-    getUserRepos: PropTypes.func.isRequired,
-}
 
 export default User;
